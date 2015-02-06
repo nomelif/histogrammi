@@ -1,82 +1,217 @@
+/*
+
+Copyright (c) 2014 Th&eacute;o Friberg
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be included
+in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+*/
+
+// NOTE! -------------------------------------------------------------------------------------------
+// This file is actually ran as the LUO KAAVIO -button is hit, so it actually contains runnable code
+// at the end!
+// -------------------------------------------------------------------------------------------------
+
+
+    
+    // This function draws the co-ordinate axes
 
     function axis(ctx){
+
+        // Begin by saving the state of the context, as we will modify it
+
         ctx.save();
+
+        // Styling
+
         ctx.strokeStyle = "black";
+
+        // X-axis
+
         ctx.moveTo(20,365);
         ctx.lineTo(570,365);
         ctx.lineTo(560,375);
         ctx.moveTo(570,365);
         ctx.lineTo(560,355);
+
+        // Stroke the X-axis
+
         ctx.stroke();
+
+        // Restore saved state
+
         ctx.restore();
 
+        // Begin by saving the state of the context, as we will modify it
+
         ctx.save();
+
+        // Y-axis
+
         ctx.moveTo(30,375);
         ctx.lineTo(30,20);
         ctx.lineTo(20,30);
         ctx.moveTo(30,20);
         ctx.lineTo(40,30);
+
+        // Stroke the Y-axis
+
         ctx.stroke();
+
+        // Finish by restoring the state of the context
+
         ctx.restore();
     }
 
+    // This function sanitizes a float entered as a string. It also informs the user.
+
     function sanitizeFloat(flt){
+
+        // Regex-based removal of most unwanted characters
+
         var result = flt.replace(/&nbsp;/g, "").replace(/\u00A0/g, "").replace(",", ".").replace(/\s/g, "").replace("<br>", "");
+        
+        // If the formatted string matches this regex, it is a valid float, if it doesn't it isnt.
+
         var ok = /^[0-9]+([.,][0-9]+)?$/;
+
+        // Does the string match the regex?
+
         if(ok.test(result)){
+
+            // It does, good. Return it.
+
             result = parseFloat(result);
             return result;
         }else{
+
+            // It isn't valid, inform the user.
+
             alert("Virhe kohdassa '"+flt+"'. Halutaan kokonais- tai desimaaliluku.");
         }
     }
 
+    // This function sanitizes an interval. It also informs the user if the float makes no sense.
+
     function sanitizeInterval(interval){
+
+        // Split the interval to two floats.
+
         var result = interval.split("-");
+
+        // Separately treat both floats
+
         var a = sanitizeFloat(result[0]);
         var b = sanitizeFloat(result[1]);
+
+        // Did you get meaniingful floats?
+
         if(b - a > 0){
+
+            // Yes, return the the size of the interval.
+
             return b - a;
         }else{
+
+            // No, inform the user. Unescape is used here to get finnish characters not covered by ascii.
+
             alert(unescape("Virhe kohdassa '"+interval+"'. Halutaan lukuv%E4li muodossa <pienempi luku>-<suurempi luku>."));
         }
     }
 
+    // Main draw-code:
+    //    - Draws axes
+    //    - Draws the plot
+    //    - Draws texts
+
     function plot(){
+
+        // Get the canvas and other useful occult arts to start drawing.
+
         var canvas = document.getElementById('canvas');
         var ctx = canvas.getContext('2d');ctx.beginPath();
 
+        // Values of the <div>s on the page, very aptly named
+
         var vals = [];
 
+        // List of the divs of the page
+
         var divs = document.getElementsByTagName("div");
+
+        // Regex to indicate a meaningful content of a div
+
         var clean = /^[0-9]+-[1-9]+[0-9]*$/;
+
+        // Iterate over the divs
+
         for(var i = 1; i < divs.length/2; i++){
-            //do something to each div like
+            
+            // Make sure the div's contents make sense
+
             if(clean.test(divs[i*2-2].innerHTML)){
+
+                // If so, push it to the list
+
                 vals.push([sanitizeInterval(divs[i*2-2].innerHTML), sanitizeFloat(divs[i*2-1].innerHTML)]);
             }else{
+
+                // Else, test if the sanitization-functions already caught the problem
+
                 if(/^$/.test(divs[i*2-2].innerHTML)){
 
-                }else{
-                    alert(unescape("Virhe kohdassa '"+divs[i*2-2].innerHTML+"'. Halutaan lukuv%E4li muodossa <pienempi luku>-<suurempi luku>."));
-                }
+                    // if not, complain
+
+                    }else{
+                        alert(unescape("Virhe kohdassa '"+divs[i*2-2].innerHTML+"'. Halutaan lukuv%E4li muodossa <pienempi luku>-<suurempi luku>."));
+                    }
             }
 
-           
-
         }
+
+        // Multipliers to:
+        //   - Fit the actual plot inside the canvas
+        //   - Add an indication of the scale
+
         var kerroin_x = 0;
-        var sum_x = 0;
         var kerroin_y = 0;
+
+        // Sum of all widths and sum of all heights, respectively
+
+        var sum_x = 0;
         var sum_y = 0;
 
-        for(var i = 0; i < vals.length; i++){
-           //do something to each div like
+        // Iterate over the already-parsed left half of the spreadsheet
 
-           sum_x += vals[i][0];
-           if(sum_y < vals[i][1]){
+        for(var i = 0; i < vals.length; i++){
+           
+            // Add the last value to the sum
+
+            sum_x += vals[i][0];
+
+            // Check if this is the highest bar so far
+            if(sum_y < vals[i][1]){
+
+                // If so, rember it.
+
                 sum_y = vals[i][1];
-           }
+            }
            
         }
 
