@@ -1,0 +1,464 @@
+<!--
+
+Copyright (c) 2014 Th&eacute;o Friberg
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be included
+in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+    <head>
+        <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+        <style>
+
+        body{
+
+        background-color: #f9f9f9;
+        font-family: "Roboto";
+        overflow-y: auto;
+        overflow-x: hidden;
+
+        }
+
+        footer{
+
+        background-color: #00bcd4;
+        left: 0px;
+        right: 0px;
+        width: auto;
+        position: absolute;
+        margin-top: 15rem;
+        padding: 15px;
+        color: white;
+
+        }
+
+        header{
+
+        background-color: #00bcd4;
+        position: fixed;
+        top: 0px;
+        left: -10px;
+        right: -10px;
+        width: auto;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+
+        }
+
+        p, table{
+
+        position: relative;
+        width: 40rem;
+        text-align: justify;
+        padding: 15px 15px 15px 15px;
+
+        border-radius: 2.5px;
+        border-top: solid 1px white;
+        box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);
+        background-color: #fafafa;
+
+
+        }
+
+        table{
+            table-layout: fixed;
+        }
+
+        th, td {
+            border: 1px solid rgba(0, 0, 0, 0.25);
+            text-align: center;
+        }
+        div {
+            border: 2px solid rgba(0, 0, 0, 0.0);
+            height: 1.5rem;
+        }
+        div:focus {
+            border: 2px solid black;
+        } 
+
+        h1{
+        color: white;
+        position: relative;
+        left: 20px;
+
+
+        }
+
+        button{
+        position: relative;
+        text-align: justify;
+        padding: 10px 10px 10px 10px;
+        color: white;
+
+        border-radius: 2.5px;
+        border-width: 0px;
+        box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.5);
+        background-color: #2196f3;
+
+        font-size: large;
+        font-weight: bold;
+        }
+
+        .link{
+            color: navy;
+            text-decoration: underline;
+
+        }
+        .link:hover{
+            color: blue;
+        }
+        .link:active{
+            color: lightblue;
+        }
+
+        sup{
+            font-size: 11px;
+        }
+
+
+        button:active{
+   box-shadow:
+    0px 5px 10px rgba(0, 0, 0, 0.75);
+    0px 2px 6px rgba(0, 0, 0, 0.5);
+  transition: box-shadow .1s ease-in-out;
+}
+
+
+        </style>
+    </head>
+    <body>
+
+    <!-- If the user is using a version of Internet Explorer lower than 10, tell him/her to get a life -->
+
+    <!--[if IE lt 10]>
+
+    <p> Selaimesi on vanhentunut, hanki tilalle jotakin uudempaa.
+    Suosittelemme <a href="https://www.mozilla.org/fi/firefox/new/">Mozilla Firefoxia</a> ja
+    <a href="https://www.google.fi/chrome/browser/desktop/index.html">Google Chromea</a>.</p>
+
+    <![endif]-->
+
+    <!-- If the browser is not a too outdated IE, display the actual page -->
+
+    <![if !IE]>
+
+    <!-- Sheet number one (the one where the histogram will appear -->
+
+    <p style="
+    position: relative;
+    top: 10rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: 600px; height: 400px;
+    ">
+    <canvas id="canvas" style="border:1.5px solid #8c8c8c;" width="600px" height= "400px"> Selaimesi ei n&auml;yt&auml; tukevan t&auml;lle ohjelmalle v&auml;ltt&auml;m&auml;t&ouml;nt&auml; canvas-elementti&auml;.
+    Suosittelemme <a href="https://www.mozilla.org/fi/firefox/new/">Mozilla Firefoxia</a> ja
+    <a href="https://www.google.fi/chrome/browser/desktop/index.html">Google Chromea</a>.
+    </canvas>
+    <script>
+
+    function axis(ctx){
+        ctx.save();
+        ctx.strokeStyle = "black";
+        ctx.moveTo(20,365);
+        ctx.lineTo(570,365);
+        ctx.lineTo(560,375);
+        ctx.moveTo(570,365);
+        ctx.lineTo(560,355);
+        ctx.stroke();
+        ctx.restore();
+
+        ctx.save();
+        ctx.moveTo(30,375);
+        ctx.lineTo(30,20);
+        ctx.lineTo(20,30);
+        ctx.moveTo(30,20);
+        ctx.lineTo(40,30);
+        ctx.stroke();
+        ctx.restore();
+    }
+
+    function sanitizeFloat(flt){
+        var result = flt.replace(/&nbsp;/g, "").replace(/\u00A0/g, "").replace(",", ".").replace(/\s/g, "").replace("<br>", "");
+        var ok = /^[0-9]+([.,][0-9]+)?$/;
+        if(ok.test(result)){
+            result = parseFloat(result);
+            return result;
+        }else{
+            alert("Virhe kohdassa '"+flt+"'. Halutaan kokonais- tai desimaaliluku.");
+        }
+    }
+
+    function sanitizeInterval(interval){
+        var result = interval.split("-");
+        var a = sanitizeFloat(result[0]);
+        var b = sanitizeFloat(result[1]);
+        if(b - a > 0){
+            return b - a;
+        }else{
+            alert(unescape("Virhe kohdassa '"+interval+"'. Halutaan lukuv%E4li muodossa <pienempi luku>-<suurempi luku>."));
+        }
+    }
+
+    function plot(){
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');ctx.beginPath();
+
+        var vals = [];
+
+        var divs = document.getElementsByTagName("div");
+        var clean = /^[0-9]+-[1-9]+[0-9]*$/;
+        for(var i = 1; i < divs.length/2; i++){
+            //do something to each div like
+            if(clean.test(divs[i*2-2].innerHTML)){
+                vals.push([sanitizeInterval(divs[i*2-2].innerHTML), sanitizeFloat(divs[i*2-1].innerHTML)]);
+            }else{
+                if(/^$/.test(divs[i*2-2].innerHTML)){
+
+                }else{
+                    alert(unescape("Virhe kohdassa '"+divs[i*2-2].innerHTML+"'. Halutaan lukuv%E4li muodossa <pienempi luku>-<suurempi luku>."));
+                }
+            }
+
+           
+
+        }
+        var kerroin_x = 0;
+        var sum_x = 0;
+        var kerroin_y = 0;
+        var sum_y = 0;
+
+        for(var i = 0; i < vals.length; i++){
+           //do something to each div like
+
+           sum_x += vals[i][0];
+           if(sum_y < vals[i][1]){
+                sum_y = vals[i][1];
+           }
+           
+        }
+
+        kerroin_x = 520. / sum_x;
+        kerroin_y = 325. / sum_y;
+
+        var width = 0;
+        var colors = ["#f44336", "#e91e63", "#9c27b0", "#673ab7", "#3f51b5", "#2196f3", "#03a9f4", "#00bcd4", "#009688", "#4caf50", "#8bc34a", "#cddc39", "#ffeb3b", "#ffc107", "#ff9800", "#ff5722", "#795548"];
+        var c = Math.floor(Math.random()*colors.length);
+
+        for(var i = 0; i < vals.length; i++){
+           //do something to each div like
+
+           width += tick(width, ctx, vals[i][1]*kerroin_y, vals[i][0]*kerroin_x, colors[c%colors.length]);
+           c++;
+           
+
+        }
+        axis(ctx);
+
+        ctx.font = "16px Roboto";
+        ctx.fillStyle = "black";
+         
+        // write the text
+        var i = 1;
+        while(Math.pow(10, i) < sum_x){
+            i = i + 1;
+        }
+        ctx.textAlign = "center";
+        ctx.fillText( String(Math.pow(10, i-1)), 370-Math.pow(10, i-1)*kerroin_x, 352);
+        ctx.moveTo(370-Math.pow(10, i-1)*kerroin_x, 355);
+        ctx.lineTo(370-Math.pow(10, i-1)*kerroin_x, 375);
+        i = 1;
+        while(Math.pow(10, i) < sum_y){
+            i = i + 1;
+        }
+        ctx.textAlign = "start";
+        ctx.fillText( String(Math.pow(10, i-1)), 41, 370-Math.pow(10, i-1)*kerroin_y);
+
+        ctx.save();
+        ctx.moveTo(20, 364-Math.pow(10, i-1)*kerroin_y);
+        ctx.lineTo(40, 364-Math.pow(10, i-1)*kerroin_y);
+        ctx.stroke();
+        ctx.restore();
+
+        ctx.save();
+        ctx.stroke();
+        ctx.restore();
+        hbars(ctx, kerroin_y, i);
+    }
+
+    function vbars(ctx, scale, i){
+        
+    }
+
+    function hbars(ctx, scale, i){
+        ctx.save();
+        ctx.beginPath();
+        ctx.strokeStyle = "#626262";
+        var ii = 1;
+        if(i < 2){
+            while(ii < 20){
+                ctx.moveTo(25, 364-Math.pow(10, i-1)*scale*ii/2);
+                ctx.lineTo(520, 364-Math.pow(10, i-1)*scale*ii/2);
+                ii = ii + 1;
+            }
+        }else{
+            while(ii < 10){
+                ctx.moveTo(25, 364-Math.pow(10, i-1)*scale*ii);
+                ctx.lineTo(520, 364-Math.pow(10, i-1)*scale*ii);
+                ii = ii + 1;
+            }
+        }
+        //alert(scale);
+        ctx.stroke();
+        ctx.restore();
+    }
+
+    function tick(before, ctx, height, width, color){
+        ctx.fillStyle = color;
+        ctx.fillRect(30+before,364-height,width+1, height);
+        return width;
+    }
+
+    function updateAxis(){
+
+    var left = document.getElementById("vasen");
+    var right = document.getElementById("oikea");
+
+    left = left.options[left.selectedIndex].text;
+    right = right.options[right.selectedIndex].text;
+
+            var c = document.getElementById("canvas");
+    var ctx = c.getContext("2d");
+    ctx.clearRect(0, 0, c.width, c.height)
+    // start by saving the current context (current orientation, origin)
+
+ctx.save();
+ 
+// when we rotate we will be pinching the
+// top-left hand corner with our thumb and finger
+ctx.translate( 0, 0 );
+ 
+// now rotate the canvas anti-clockwise by 90 degrees
+// holding onto the translate point
+ctx.rotate( Math.PI / 2 );
+ 
+// specify the font and colour of the text
+ctx.font = "16px Roboto";
+ctx.fillStyle = "black"; // red
+ 
+// set alignment of text at writing point (left-align)
+ctx.textAlign = "left";
+ 
+// write the text
+ctx.fillText( right, 170, -10 );
+ 
+// now restore the canvas flipping it back to its original orientation
+ctx.restore();
+ctx.font = "16px Roboto";
+ctx.fillStyle = "black";
+ 
+// write the text
+ctx.fillText( left, 260, 385 );
+    }
+
+    updateAxis();
+    </script>
+    </p>
+
+
+    <table style="
+    position: relative;
+    top: 10rem;
+    width: 20rem;
+    margin-left: auto;
+    margin-right: auto;
+    ">
+<tr><th title="Lukuv&auml;li, joka rajaa n&auml;ytteest&auml; k&auml;sitelt&auml;v&auml; osan, n&auml;kyy kaaviossa pylv&auml;&auml;n&auml;; esim. 2012-2014">V&auml;li <sup>?</sup></th><th title="Arvo, joka tietty&auml; n&auml;ytett&auml; vastaa, kaaviossa pylv&auml;&auml;n korkeys, esim. 578">Arvo <sup>?</sup></th></tr>
+<tr><th>
+<select id="vasen">
+  <option value="&euro;">euroa (&euro;)</option>
+  <option value="m">metri&auml; (m)</option>
+  <option value="a">vuotta (a)</option>
+  <option value="m">minuuttia (min)</option>
+  <option value="h">tuntia (h)</option>
+  <option value="s">sekuntia (s)</option>
+  <option value="d">p&auml;iv&auml;&auml; (d)</option>
+  <option value="l">litraa (l)</option>
+  <option value="kg">kilogrammaa (kg)</option>
+</select id="oikea">
+</th>
+<th/>
+<select id="oikea">
+  <option value="f">frekvenssi (f)</option>
+  <option value="hl&ouml;">henkil&ouml;&auml; (hl&ouml;)</option>
+  <option value="&euro;">euroa (&euro;)</option>
+  <option value="m">metri&auml; (m)</option>
+  <option value="a">vuotta (a)</option>
+  <option value="m">minuuttia (min)</option>
+  <option value="h">tuntia (h)</option>
+  <option value="s">sekuntia (s)</option>
+  <option value="d">p&auml;iv&auml;&auml; (d)</option>
+  <option value="l">litraa (l)</option>
+  <option value="kg">kilogrammaa (kg)</option>
+  <option value="kpl">kappaletta (kpl.)</option>
+</select>
+
+
+ </th></tr>
+<tr><td><div contenteditable></td><td><div contenteditable></td></tr>
+<tr><td><div contenteditable></td><td><div contenteditable></td></tr>
+<tr><td><div contenteditable></td><td><div contenteditable></td></tr>
+<tr><td><div contenteditable></td><td><div contenteditable></td></tr>
+<tr><td><div contenteditable></td><td><div contenteditable></td></tr>
+<tr><td><div contenteditable></td><td><div contenteditable></td></tr>
+<tr><td><div contenteditable></td><td><div contenteditable></td></tr>
+<tr><td><div contenteditable></td><td><div contenteditable></td></tr>
+<tr><td><div contenteditable></td><td><div contenteditable></td></tr>
+<tr><td><div contenteditable></td><td><div contenteditable></td></tr>
+</table>
+    
+    <!-- GO-button -->
+    <button style="
+    display: block;
+    position: relative;
+    top: 11rem;
+    margin-left: auto;
+    margin-right: auto;"
+    onClick="updateAxis(); plot();">LUO KAAVIO</button>
+
+        <footer>
+T&auml;m&auml; sis&auml;lt&ouml; on lisensioitu <span
+class="link"
+onClick="alert('Copyright (c) 2014 Th&eacute;o Friberg\n\n\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the\n&quot;Software&quot;), to deal in the Software without restriction, including\nwithout limitation the rights to use, copy, modify, merge, publish,\ndistribute, sublicense, and/or sell copies of the Software, and to\npermit persons to whom the Software is furnished to do so, subject to\nthe following conditions:\n\n\nThe above copyright notice and this permission notice shall be included\nin all copies or substantial portions of the Software.\n\n\nTHE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND,\nEXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF\nMERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.\nIN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY\nCLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,\nTORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE\nSOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.');"
+title="Napsauta lukeaksi t&auml;ysi lisenssi (Englanniksi)"
+>MIT / Expat -lisenssill&auml;</span> &copy; 2014 Th&eacute;o Friberg. Olet vapaa muokkaamaan sivua ja jakamaan sek&auml; myym&auml;&auml;n sek&auml; alkuper&auml;ist&auml; sivua, ett&auml; muokkaamiasia versioita tahtosi mukaan.
+</em></footer>
+
+
+    <!-- Material designed header -->
+
+    <header> <h1>Histogrammi</h1></header>
+
+    <![endif]>
+
+
+    </body>
+</html>
