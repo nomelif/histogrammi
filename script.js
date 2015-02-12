@@ -214,15 +214,24 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             }
            
         }
+        
+        // Calculate the values of the multipliers based on sum_x and sum_y and the size of the <canvas> used
 
         // Calculate the exact values of the multipliers
 
         kerroin_x = 520. / sum_x;
         kerroin_y = 325. / sum_y;
+        
+        /*
+        ************************************************************
+        * TODO: CHECK IF THIS VARIABLE IS USELESS. IF SO REMOVE IT *
+        ************************************************************
+        */
 
         // Width of the plor so far
 
         var width = 0;
+<<<<<<< HEAD
 
         // List of colors to use
 
@@ -230,7 +239,22 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         
         // Pick a first color at random
 
+=======
+        
+        // Colors used in the plot (they are from Google's Material Design). They are done so that
+        // colors that are next to each other both offer suffiescent contrast and look good together.
+        // The program iterates over the colors so that it comes with a complete sequence of colors,
+        // that may, if needed, wrap around the beginning of the array. The program starts the iteration
+        // from a random place.
+        
+        var colors = ["#f44336", "#e91e63", "#9c27b0", "#673ab7", "#3f51b5", "#2196f3", "#03a9f4", "#00bcd4", "#009688", "#4caf50", "#8bc34a", "#cddc39", "#ffeb3b", "#ffc107", "#ff9800", "#ff5722", "#795548"];
+        
+        // Generate the starting-place's location randomly
+        
+>>>>>>> 06f1aa7bad1505f94a9f12b8bf2171e93cc9ded7
         var c = Math.floor(Math.random()*colors.length);
+        
+        // 
 
         // Iterate over both colors and bars
 
@@ -396,6 +420,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  
     // Now rotate the canvas anti-clockwise by 90 degrees
 
+<<<<<<< HEAD
     ctx.rotate( Math.PI / 2 );
  
     // Specify the font and colour of the text
@@ -418,3 +443,6 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 }
 
 updateAxis();
+=======
+    updateAxis();
+>>>>>>> 06f1aa7bad1505f94a9f12b8bf2171e93cc9ded7

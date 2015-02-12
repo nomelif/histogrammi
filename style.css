@@ -22,113 +22,131 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 */
-        body{
 
-        background-color: #f9f9f9;
-        font-family: "Roboto";
-        overflow-y: auto;
-        overflow-x: hidden;
+body{
 
-        }
+    /*
 
-        footer{
+    Using Android's Roboto font, overflow-x for scrollbars, mostly
 
-        background-color: #00bcd4;
-        left: 0px;
-        right: 0px;
-        width: auto;
-        position: absolute;
-        margin-top: 15rem;
-        padding: 15px;
-        color: white;
+    */
 
-        }
+    background-color: #f9f9f9;
+    font-family: "Roboto";
+    overflow-x: hidden;
 
-        header{
+}
 
-        background-color: #00bcd4;
-        position: fixed;
-        top: 0px;
-        left: -10px;
-        right: -10px;
-        width: auto;
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+footer{
 
-        }
+    /*
+    
+    Footer's position is absolute, as it should be visible at all times
+    
+    */
 
-        p, table{
+    background-color: #00bcd4;
+    left: 0px;
+    right: 0px;
+    width: auto;
+    position: absolute;
+    margin-top: 15rem;
+    padding: 15px;
+    color: white;
 
-        position: relative;
-        width: 40rem;
-        text-align: justify;
-        padding: 15px 15px 15px 15px;
+}
 
-        border-radius: 2.5px;
-        border-top: solid 1px white;
-        box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);
-        background-color: #fafafa;
+header{
 
+    /*
 
-        }
+    The header is also fixed in position
 
-        table{
-            table-layout: fixed;
-        }
+    */
 
-        th, td {
-            border: 1px solid rgba(0, 0, 0, 0.25);
-            text-align: center;
-        }
-        div {
-            border: 2px solid rgba(0, 0, 0, 0.0);
-            height: 1.5rem;
-        }
-        div:focus {
-            border: 2px solid black;
-        } 
+    background-color: #00bcd4;
+    position: fixed;
+    top: 0px;
+    left: -10px;
+    right: -10px;
+    width: auto;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
 
-        h1{
-        color: white;
-        position: relative;
-        left: 20px;
+}
+
+p, table{
+
+position: relative;
+width: 40rem;
+text-align: justify;
+padding: 15px 15px 15px 15px;
+
+border-radius: 2.5px;
+border-top: solid 1px white;
+box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);
+background-color: #fafafa;
 
 
-        }
+}
 
-        button{
-        position: relative;
-        text-align: justify;
-        padding: 10px 10px 10px 10px;
-        color: white;
+table{
+    table-layout: fixed;
+}
 
-        border-radius: 2.5px;
-        border-width: 0px;
-        box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.5);
-        background-color: #2196f3;
+th, td {
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    text-align: center;
+}
+div {
+    border: 2px solid rgba(0, 0, 0, 0.0);
+    height: 1.5rem;
+}
+div:focus {
+    border: 2px solid black;
+} 
 
-        font-size: large;
-        font-weight: bold;
-        }
-
-        .link{
-            color: navy;
-            text-decoration: underline;
-
-        }
-        .link:hover{
-            color: blue;
-        }
-        .link:active{
-            color: lightblue;
-        }
-
-        sup{
-            font-size: 11px;
-        }
+h1{
+color: white;
+position: relative;
+left: 20px;
 
 
-        button:active{
-        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.75);
-    0px 2px 6px rgba(0, 0, 0, 0.5);
-  transition: box-shadow .1s ease-in-out;
+}
+
+button{
+position: relative;
+text-align: justify;
+padding: 10px 10px 10px 10px;
+color: white;
+
+border-radius: 2.5px;
+border-width: 0px;
+box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.5);
+background-color: #2196f3;
+
+font-size: large;
+font-weight: bold;
+}
+
+.link{
+    color: navy;
+    text-decoration: underline;
+
+}
+.link:hover{
+    color: blue;
+}
+.link:active{
+    color: lightblue;
+}
+
+sup{
+    font-size: 11px;
+}
+
+
+button:active{
+box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.75);
+0px 2px 6px rgba(0, 0, 0, 0.5);
+transition: box-shadow .1s ease-in-out;
 }
