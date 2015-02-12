@@ -220,6 +220,10 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         kerroin_x = 520. / sum_x;
         kerroin_y = 325. / sum_y;
 
+        // Width of the plor so far
+
+        var width = 0;
+
         // List of colors to use
 
         var colors = ["#f44336", "#e91e63", "#9c27b0", "#673ab7", "#3f51b5", "#2196f3", "#03a9f4", "#00bcd4", "#009688", "#4caf50", "#8bc34a", "#cddc39", "#ffeb3b", "#ffc107", "#ff9800", "#ff5722", "#795548"];
@@ -234,7 +238,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         
             // Draw the bar
 
-            tick(width, ctx, vals[i][1]*kerroin_y, vals[i][0]*kerroin_x, colors[c%colors.length]);
+            width += tick(width, ctx, vals[i][1]*kerroin_y, vals[i][0]*kerroin_x, colors[c%colors.length]);
             
             // Increment the iterator for the colors
 
@@ -365,7 +369,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     // Function used to re-draw the axes and drawing the names / units seen
     // (This internally rotates the context)
 
-    function updateAxis(ctx){
+    function updateAxis(){
 
     // Get the divs containing the names of the units
 
@@ -377,6 +381,11 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     left = left.options[left.selectedIndex].text;
     right = right.options[right.selectedIndex].text;
 
+    // Get the context of the plot
+
+    var c = document.getElementById("canvas");
+    var ctx = c.getContext("2d");
+    
     // Clear the plot
 
     ctx.clearRect(0, 0, c.width, c.height)
@@ -404,8 +413,8 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     ctx.font = "16px Roboto";
     ctx.fillStyle = "black";
      
-    // Write the text on the lefy
+    // Write the text on the left
     ctx.fillText( left, 260, 385 );
 }
 
-updateAxis(ctx);
+updateAxis();
