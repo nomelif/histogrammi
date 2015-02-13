@@ -76,77 +76,178 @@ header{
 
 p, table{
 
-position: relative;
-width: 40rem;
-text-align: justify;
-padding: 15px 15px 15px 15px;
+    /*
 
-border-radius: 2.5px;
-border-top: solid 1px white;
-box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);
-background-color: #fafafa;
+    This is the generic configuration for the <table> and <p> -tags, table has
+    a separate and more specific configuration below.
 
+    */
+
+    position: relative;
+    width: 40rem;
+    text-align: justify;
+    padding: 15px 15px 15px 15px;
+
+    border-radius: 2.5px;
+    border-top: solid 1px white;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);
+    background-color: #fafafa;
 
 }
 
 table{
+
+    /*
+
+    Separate configuration for the <table> -tag
+
+    */
+
     table-layout: fixed;
 }
 
 th, td {
+
+    /*
+
+    More options related to how the <table> looks like
+
+    */
+
     border: 1px solid rgba(0, 0, 0, 0.25);
     text-align: center;
+
 }
+
 div {
+
+    /*
+
+    The divs are only used as inputs, thus the configuration looks like an input
+
+    */
+
+
     border: 2px solid rgba(0, 0, 0, 0.0);
     height: 1.5rem;
+
 }
+
 div:focus {
+
+    /*
+
+    The divs are only used as inputs, thus the configuration looks like an input
+
+    */
+
     border: 2px solid black;
+
 } 
 
 h1{
-color: white;
-position: relative;
-left: 20px;
 
+    /*
+
+    This is used as a material-styled header
+    
+    */
+
+    color: white;
+    position: relative;
+    left: 20px;
 
 }
 
 button{
-position: relative;
-text-align: justify;
-padding: 10px 10px 10px 10px;
-color: white;
 
-border-radius: 2.5px;
-border-width: 0px;
-box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.5);
-background-color: #2196f3;
+    /*
 
-font-size: large;
-font-weight: bold;
+    This is basically used as a trigger for generating the plot
+
+    */
+
+    position: relative;
+    text-align: justify;
+    padding: 10px 10px 10px 10px;
+    color: white;
+
+    border-radius: 2.5px;
+    border-width: 0px;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.5);
+    background-color: #2196f3;
+
+    font-size: large;
+    font-weight: bold;
+
+    /*
+
+    Used to revert to normal state after press
+
+    */
+
+    transition: box-shadow .1s ease-in-out;
+
 }
 
 .link{
+
+    /*
+
+    The page doesn't actually contain links, but there is a link-like <span>
+    triggering js.
+
+    */
+
     color: navy;
     text-decoration: underline;
 
 }
+
 .link:hover{
+
+    /*
+
+    The page doesn't actually contain links, but there is a link-like <span>
+    triggering js.
+
+    */ 
+
     color: blue;
 }
+
 .link:active{
+
+    /*
+
+    The page doesn't actually contain links, but there is a link-like <span>
+    triggering js.
+
+    */
+
     color: lightblue;
+
 }
 
 sup{
+
+    /*
+
+    Upper index ?-sign used to trigger tooltips
+
+    */
+
     font-size: 11px;
 }
 
-
 button:active{
-box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.75);
-0px 2px 6px rgba(0, 0, 0, 0.5);
-transition: box-shadow .1s ease-in-out;
+
+    /*
+
+    Effect to modify the shadow of the button
+
+    */
+
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.75);
+    transition: box-shadow .1s ease-in-out;
 }
