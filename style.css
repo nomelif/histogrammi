@@ -104,6 +104,11 @@ table{
     */
 
     table-layout: fixed;
+    position: relative;
+    top: 10rem;
+    width: 20rem;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 th, td {
@@ -179,6 +184,11 @@ button{
 
     font-size: large;
     font-weight: bold;
+
+    display: block;
+    top: 11rem;
+    margin-left: auto;
+    margin-right: auto;
 
     /*
 
