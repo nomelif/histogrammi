@@ -28,6 +28,14 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // at the end!
 // -------------------------------------------------------------------------------------------------
 
+// These (global) variables define translation on the x- and y-axis.
+// They are mainly used to make space for the vertical text.
+// Global variables are used here because JS doesn't support #defines
+// and macros. Wiew the as such.
+
+
+var x_move = 27;
+var y_move = 0;
 
     
     // This function draws the co-ordinate axes
@@ -44,11 +52,11 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
         // X-axis
 
-        ctx.moveTo(20,365);
-        ctx.lineTo(570,365);
-        ctx.lineTo(560,375);
-        ctx.moveTo(570,365);
-        ctx.lineTo(560,355);
+        ctx.moveTo(x_move + 20,  y_move + 365);
+        ctx.lineTo(x_move + 570, y_move + 365);
+        ctx.lineTo(x_move + 560, y_move + 375);
+        ctx.moveTo(x_move + 570, y_move + 365);
+        ctx.lineTo(x_move + 560, y_move + 355);
 
         // Stroke the X-axis
 
@@ -64,11 +72,11 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
         // Y-axis
 
-        ctx.moveTo(30,375);
-        ctx.lineTo(30,20);
-        ctx.lineTo(20,30);
-        ctx.moveTo(30,20);
-        ctx.lineTo(40,30);
+        ctx.moveTo(x_move + 30, y_move + 375);
+        ctx.lineTo(x_move + 30, y_move + 20 );
+        ctx.lineTo(x_move + 20, y_move + 30 );
+        ctx.moveTo(x_move + 30, y_move + 20 );
+        ctx.lineTo(x_move + 40, y_move + 30 );
 
         // Stroke the Y-axis
 
@@ -127,6 +135,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             // Yes, return the the size of the interval.
 
             return b - a;
+
         }else{
 
             // No, inform the user. Unescape is used here to get finnish characters not covered by ascii.
@@ -266,12 +275,12 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
         // Draw the adequate text to the adequate place
 
-        ctx.fillText( String(Math.pow(10, i-1)), 370-Math.pow(10, i-1)*kerroin_x, 352);
+        ctx.fillText( String(Math.pow(10, i-1)), x_move + 370-Math.pow(10, i-1)*kerroin_x, y_move + 352);
         
         // Draw the line indicating scale of the x-axis
 
-        ctx.moveTo(370-Math.pow(10, i-1)*kerroin_x, 355);
-        ctx.lineTo(370-Math.pow(10, i-1)*kerroin_x, 375);
+        ctx.moveTo(x_move + 370-Math.pow(10, i-1)*kerroin_x, y_move + 355);
+        ctx.lineTo(x_move + 370-Math.pow(10, i-1)*kerroin_x, y_move + 375);
 
         // Calculate the order of magnitude for the plot's y-axis
 
@@ -282,16 +291,16 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
         // Change the alignment of the text & draw the text
 
-        ctx.textAlign = "start";
-        ctx.fillText( String(Math.pow(10, i-1)), 41, 370-Math.pow(10, i-1)*kerroin_y);
+        ctx.textAlign = "end";
+        ctx.fillText( String(Math.pow(10, i-1)), x_move + 15, y_move + 370-Math.pow(10, i-1)*kerroin_y);
 
         // Draw the line indicating the scale of the y-axis
 
         ctx.save();
-        ctx.moveTo(20, 364-Math.pow(10, i-1)*kerroin_y);
-        ctx.lineTo(40, 364-Math.pow(10, i-1)*kerroin_y);
+        ctx.moveTo(x_move + 20, y_move + 364-Math.pow(10, i-1)*kerroin_y);
+        ctx.lineTo(x_move + 40, y_move + 364-Math.pow(10, i-1)*kerroin_y);
 
-        // Actually draw the pahts
+        // Actually draw the paths
 
         ctx.stroke();
 
@@ -319,7 +328,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
         // Set the color of the path
 
-        ctx.strokeStyle = "#626262";
+        ctx.strokeStyle = "black";//"#626262";
 
         // Iterate over the bars, if the scale is small use more, if it's big, use less
 
@@ -329,8 +338,8 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             // If we have a small scale, use nineteen bars
 
             while(ii < 20){
-                ctx.moveTo(25, 364-Math.pow(10, i-1)*scale*ii/2);
-                ctx.lineTo(520, 364-Math.pow(10, i-1)*scale*ii/2);
+                ctx.moveTo(x_move + 25,  y_move + 364-Math.pow(10, i-1)*scale*ii/2);
+                ctx.lineTo(x_move + 560, y_move + 364-Math.pow(10, i-1)*scale*ii/2);
                 ii = ii + 1;
             }
         }else{
@@ -338,8 +347,8 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             // Else use nine bars 
 
             while(ii < 10){
-                ctx.moveTo(25, 364-Math.pow(10, i-1)*scale*ii);
-                ctx.lineTo(520, 364-Math.pow(10, i-1)*scale*ii);
+                ctx.moveTo(x_move + 25,  y_move + 364-Math.pow(10, i-1)*scale*ii);
+                ctx.lineTo(x_move + 560, y_move + 364-Math.pow(10, i-1)*scale*ii);
                 ii = ii + 1;
             }
         }
@@ -362,7 +371,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
     function tick(before, ctx, height, width, color){
         ctx.fillStyle = color;
-        ctx.fillRect(30+before,364-height,width+1, height);
+        ctx.fillRect(x_move + 30 + before, y_move + 364 - height, width + 1, height);
         return width;
     }
 
@@ -406,7 +415,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     ctx.textAlign = "left";
      
     // Write the text on the right
-    ctx.fillText( right, 170, -10 );
+    ctx.fillText( right, -y_move + 170, - x_move + 20);
      
     // Now restore the canvas flipping it back to its original orientation
     ctx.restore();
@@ -414,7 +423,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     ctx.fillStyle = "black";
      
     // Write the text on the left
-    ctx.fillText( left, 260, 385 );
+    ctx.fillText( left, x_move + 260, y_move + 385);
 }
 
 // Function to display copyleft-info
