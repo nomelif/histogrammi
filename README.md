@@ -4,7 +4,7 @@ Tämä ohjelma tuottaa annetusta datasta matemaattisilta merkinnöiltään oikee
 
 ## Asennus
 
-Histogrammi-sovelluksen asenna lataamalla .zip tiedoston oikeasta laidasta.Pura .zip kansio ja avaa selaimella (Internet Explorer ei ole tuettu) tiedosto index.html
+Histogrammi-sovelluksen asenna lataamalla .zip tiedoston oikeasta laidasta.Pura .zip -kansio ja avaa selaimella (Internet Explorer ei ole tuettu) tiedosto index.html.
 
 ### Purkaminen Unixeilla ja Linux® -alustalla
 
@@ -17,7 +17,7 @@ Graafinen ratkaisu vaihtelee tarkan distribuution ja työpöydän perusteella, m
 
 ### Purkaminen Microsoft Windows -alustalla
 
-Microsoft Windows-käyttöjärjestelmällä purkaminen hoituu Resurssien hallinta > Vasen painallus > Pura Kaikki. Seuraa sitten näytöllä näkyviä ohjeita
+Microsoft Windows-käyttöjärjestelmällä purkaminen hoituu: Resurssien hallinta > Vasen painallus > Pura Kaikki. Seuraa sitten näytöllä näkyviä ohjeita
 
 ### Purkaminen Mac OSX -alustalla
 
