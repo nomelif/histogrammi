@@ -279,12 +279,16 @@ var y_move = 0;
         
         // Draw the line indicating scale of the x-axis
 
-        ctx.moveTo(x_move + 370-Math.pow(10, i-1)*kerroin_x, y_move + 355);
-        ctx.lineTo(x_move + 370-Math.pow(10, i-1)*kerroin_x, y_move + 375);
+        ctx.moveTo(x_move + Math.pow(10, i-1)*kerroin_x + 30, y_move + 355);
+        ctx.lineTo(x_move + Math.pow(10, i-1)*kerroin_x + 30, y_move + 375);
 
-        // Draw the x-scale
+        // Draw the extended x-scale, but only if asked to do so
 
-        vbars(ctx, kerroin_x, i);
+        if(document.getElementById("show_vbars").checked){
+
+            vbars(ctx, kerroin_x, i);
+
+        }
 
         // Calculate the order of magnitude for the plot's y-axis
 
