@@ -275,12 +275,16 @@ var y_move = 0;
 
         // Draw the adequate text to the adequate place
 
-        ctx.fillText( String(Math.pow(10, i-1)), x_move + 370-Math.pow(10, i-1)*kerroin_x, y_move + 352);
+        ctx.fillText( String(Math.pow(10, i-1)), x_move + Math.pow(10, i-1)*kerroin_x + 30, y_move + 352);//       x_move + 370-Math.pow(10, i-1)*kerroin_x, y_move + 352);
         
         // Draw the line indicating scale of the x-axis
 
         ctx.moveTo(x_move + 370-Math.pow(10, i-1)*kerroin_x, y_move + 355);
         ctx.lineTo(x_move + 370-Math.pow(10, i-1)*kerroin_x, y_move + 375);
+
+        // Draw the x-scale
+
+        vbars(ctx, kerroin_x, i);
 
         // Calculate the order of magnitude for the plot's y-axis
 
@@ -312,6 +316,60 @@ var y_move = 0;
         // Draw the horizontal bars onto the plot
 
         hbars(ctx, kerroin_y, i);
+    }
+
+    // Function to draw the vertical bars of the plot
+
+    function vbars(ctx, scale, i){
+
+        // Save the context
+
+        ctx.save();
+
+        // Start drawing (important)
+
+        ctx.beginPath();
+
+        // Set the color of the path
+
+        ctx.strokeStyle = "black";//"#626262";
+
+        // Iterate over the bars, if the scale is small use more, if it's big, use less
+
+        var ii = 1;
+        if(i < 2){
+
+            // If we have a small scale, use nineteen bars
+
+            while(ii < 20){
+
+                //alert(x_move + 25 + Math.pow(10, i-1)*scale*ii/2)
+
+                ctx.moveTo(x_move + Math.pow(10, i-1)*scale*ii/2 + 30,  y_move + 370);
+                ctx.lineTo(x_move +  Math.pow(10, i-1)*scale*ii/2 + 30, y_move + 360);
+                ii = ii + 1;
+            }
+        }else{
+
+            // Else use nine bars
+
+            while(ii < 10){
+
+                ///alert(yx_move + 25 + Math.pow(10, i-1)*scale*ii);
+
+                ctx.moveTo(x_move + Math.pow(10, i-1)*scale*ii + 30,  y_move + 370);
+                ctx.lineTo(x_move + Math.pow(10, i-1)*scale*ii + 30, y_move + 360);
+                ii = ii + 1;
+            }
+        }
+
+        // Stroke the path
+
+        ctx.stroke();
+
+        // Restore the context
+
+        ctx.restore();
     }
 
     // Function to draw the horizontal bars of the plot
@@ -424,6 +482,10 @@ var y_move = 0;
      
     // Write the text on the left
     ctx.fillText( left, x_move + 260, y_move + 385);
+
+    // Scroll back to top
+
+    scroll(0,0);
 }
 
 // Function to display copyleft-info
