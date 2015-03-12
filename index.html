@@ -44,39 +44,12 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     <!-- If the browser is not a too outdated IE, display the actual page -->
 
     <![if !IE]>
-
-    <!-- Sheet number one (the one where the histogram will appear -->
-
-    <p style="
-    position: relative;
-    top: 10rem;
-    margin-left: auto;
-    margin-right: auto;
-    width: 600px; height: 400px;
-    ">
-    <canvas id="canvas" style="border:1.5px solid #8c8c8c;" width="600px" height= "400px"> Selaimesi ei n&auml;yt&auml; tukevan t&auml;lle ohjelmalle v&auml;ltt&auml;m&auml;t&ouml;nt&auml; canvas-elementti&auml;.
-    Suosittelemme <a href="https://www.mozilla.org/fi/firefox/new/">Mozilla Firefoxia</a> ja
-    <a href="https://www.google.fi/chrome/browser/desktop/index.html">Google Chromea</a>.
-    </canvas>
-    <script src="Resources/JS/script.js"></script>
+    
+    <p style="margin-top: 7em; margin-left: auto; margin-right: auto; width: 95%;">
+      T&auml;ydenn&auml; alla oleva taulukko, napsauta sitten &quot;Luo kaavio&quot; -painiketta. Kaavio ilmestyy sitten taulukon viereen. Voit ladata sen napsauttamalla sit&auml; vasemmalla painikkeella ja valitsemalla selaimestasi riippuen oikean vaihtoehdon.
     </p>
 
-    <p style="
-    position: relative;
-    top: 10rem;
-    margin-left: auto;
-    margin-right: auto;
-    width: 600px;
-    ">
-
-    <input type="checkbox" id="show_vbars"/> Lis&auml;&auml; kaavion vaakasuuntaiseen akseliin tarkka mittakaava.
-
-    </p>
-
-    <!-- Sheet number two (the one where the data will be fed into the system) -->
-
-
-    <table>
+    <table style="margin-left: 1em;">
       <tr>
         <th title="Lukuv&auml;li, joka rajaa n&auml;ytteest&auml; k&auml;sitelt&auml;v&auml; osan, n&auml;kyy kaaviossa pylv&auml;&auml;n&auml;; esim. 2012-2014">V&auml;li <sup>?</sup></th><th title="Arvo, joka tietty&auml; n&auml;ytett&auml; vastaa, kaaviossa pylv&auml;&auml;n korkeys, esim. 578">Arvo <sup>?</sup>
       </th>
@@ -124,9 +97,32 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       <tr><td><div contenteditable></td><td><div contenteditable></td></tr>
       <tr><td><div contenteditable></td><td><div contenteditable></td></tr>
     </table>
+
+    <p style="margin-left: 22em;
+    margin-top:-16.55em;
+    width: 600px; height: 400px;
+    ">
+    <canvas id="canvas" style="border:1.5px solid #8c8c8c;" width="600px" height= "400px"> Selaimesi ei n&auml;yt&auml; tukevan t&auml;lle ohjelmalle v&auml;ltt&auml;m&auml;t&ouml;nt&auml; canvas-elementti&auml;.
+    Suosittelemme <a href="https://www.mozilla.org/fi/firefox/new/">Mozilla Firefoxia</a> ja
+    <a href="https://www.google.fi/chrome/browser/desktop/index.html">Google Chromea</a>.
+    </canvas>
+    <script src="Resources/JS/script.js"></script>
+    </p>
+
+            <p style="
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    width: 58em;
+    ">
+
+        <input type="checkbox" id="show_vbars"/> Lis&auml;&auml; kaavion vaakasuuntaiseen akseliin tarkka mittakaava.
+
+    </p>
+
+    <button onClick="updateAxis(); plot();" style="margin-top: -7em;">LUO KAAVIO</button>
     
     <!-- GO-button -->
-    <button onClick="updateAxis(); plot();">LUO KAAVIO</button>
 
     <footer>
       T&auml;m&auml; sis&auml;lt&ouml; on lisensioitu <span
