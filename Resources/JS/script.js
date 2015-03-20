@@ -182,7 +182,7 @@ var y_move = 0;
 
         for(var i = 1; i < divs.length/2; i++){
 
-            // Remove brs from the div
+            // Remove <br>s from the div
 
             divs[i*2-2].innerHTML = divs[i*2-2].innerHTML.replace("<br>", "");
             
@@ -208,6 +208,10 @@ var y_move = 0;
                     vals.push([range, sanitizeFloat(divs[i*2-1].innerHTML)]);
                     previous_greater = val[0];
                 }else{
+
+                    // IE-hack
+
+                    if(divs[i*2-2].innerHTML != "<br>")
                     alert(unescape("Virhe kohdassa '"+divs[i*2-2].innerHTML+"'. Lukuv%E4lien kuuluu olla samat koko kuvaajassa, ja niiden v%E4liss%E4 ei kuulu olla v%E4lej%E4."));
                 }
 
