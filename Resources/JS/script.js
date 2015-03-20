@@ -121,14 +121,21 @@ var y_move = 0;
 
         // Split the interval to two floats.
 
+        var a = 1;
+        var b = 0;
+
+        if(interval.search("\-") != -1){
+
         var result = interval.split("-");
 
         // Separately treat both floats
 
-        var a = sanitizeFloat(result[0]);
-        var b = sanitizeFloat(result[1]);
+        a = sanitizeFloat(result[0]);
+        b = sanitizeFloat(result[1]);
 
-        // Did you get meaniingful floats?
+        // Did you get meaningful floats?
+
+        }
 
         if(b - a > 0){
 
@@ -170,7 +177,13 @@ var y_move = 0;
 
         // Iterate over the divs
 
+        var previous = -1;
+
         for(var i = 1; i < divs.length/2; i++){
+
+            // Remove brs from the div
+
+            divs[i*2-2].innerHTML = divs[i*2-2].innerHTML.replace("<br>", "");
             
             // Make sure the div's contents make sense
 
@@ -178,7 +191,20 @@ var y_move = 0;
 
                 // If so, push it to the list
 
+                var val = sanitizeInterval(divs[i*2-2].innerHTML);
+
+                if(previous == val){
+
                 vals.push([sanitizeInterval(divs[i*2-2].innerHTML), sanitizeFloat(divs[i*2-1].innerHTML)]);
+                
+                }else if(previous == -1){
+                    previous = val;
+                    vals.push([sanitizeInterval(divs[i*2-2].innerHTML), sanitizeFloat(divs[i*2-1].innerHTML)]);
+                    
+                }else{
+                    alert(unescape("Virhe kohdassa '"+divs[i*2-2].innerHTML+"'. Lukuv%E4lien kuuluu olla samat koko kuvaajassa"));
+                }
+
             }else{
 
                 // Else, test if the sanitization-functions already caught the problem
@@ -439,7 +465,7 @@ var y_move = 0;
 
     function tick(before, ctx, height, width, color){
         ctx.fillStyle = color;
-        ctx.fillRect(x_move + 30 + before, y_move + 364 - height, width + 1, height);
+        ctx.fillRect(x_move + 30 + before, y_move + 364 - height, width, height);
         return width;
     }
 
