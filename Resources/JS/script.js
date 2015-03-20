@@ -162,7 +162,7 @@ var y_move = 0;
 
         // List of the divs of the page
 
-        var divs = document.getElementsByTagName("div");
+        var divs = document.getElementsByClassName("in");
 
         // Regex to indicate a meaningful content of a div
 
@@ -274,7 +274,7 @@ var y_move = 0;
         }
 
         // Draw the adequate text to the adequate place
-
+        if(!document.getElementById("show_vbars").checked)
         ctx.fillText( String(Math.pow(10, i-1)), x_move + Math.pow(10, i-1)*kerroin_x + 30, y_move + 352);//       x_move + 370-Math.pow(10, i-1)*kerroin_x, y_move + 352);
         
         // Draw the line indicating scale of the x-axis
@@ -351,6 +351,9 @@ var y_move = 0;
 
                 ctx.moveTo(x_move + Math.pow(10, i-1)*scale*ii/2 + 30,  y_move + 370);
                 ctx.lineTo(x_move +  Math.pow(10, i-1)*scale*ii/2 + 30, y_move + 360);
+                if(!(ii%2))
+                ctx.fillText( String(Math.pow(10, i-1)*(ii/2)), x_move + Math.pow(10, i-1)*scale*ii/2 + 30, y_move + 350);//       x_move + 370-Math.pow(10, i-1)*kerroin_x, y_move + 352);
+
                 ii = ii + 1;
             }
         }else{
@@ -363,6 +366,9 @@ var y_move = 0;
 
                 ctx.moveTo(x_move + Math.pow(10, i-1)*scale*ii + 30,  y_move + 370);
                 ctx.lineTo(x_move + Math.pow(10, i-1)*scale*ii + 30, y_move + 360);
+                if(!(ii%2))
+                ctx.fillText( String(Math.pow(10, i-1)*(ii)), x_move + Math.pow(10, i-1)*scale*ii + 30, y_move + 350);//       x_move + 370-Math.pow(10, i-1)*kerroin_x, y_move + 352);
+
                 ii = ii + 1;
             }
         }
