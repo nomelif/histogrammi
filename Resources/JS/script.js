@@ -141,7 +141,7 @@ var y_move = 0;
 
             // Yes, return the the size of the interval.
 
-            return b - a;
+            return [b, a];
 
         }else{
 
@@ -178,6 +178,7 @@ var y_move = 0;
         // Iterate over the divs
 
         var previous = -1;
+        var previous_greater = -1;
 
         for(var i = 1; i < divs.length/2; i++){
 
@@ -192,17 +193,22 @@ var y_move = 0;
                 // If so, push it to the list
 
                 var val = sanitizeInterval(divs[i*2-2].innerHTML);
+                var range = val[0] - val[1]
 
-                if(previous == val){
+                if(previous_greater == -1){
+                    previous_greater == val[1] - 1;
+                }
 
-                vals.push([sanitizeInterval(divs[i*2-2].innerHTML), sanitizeFloat(divs[i*2-1].innerHTML)]);
-                
+                if(previous == range && previous_greater == val[1]-1){
+
+                vals.push([range, sanitizeFloat(divs[i*2-1].innerHTML)]);
+                previous_greater = val[0];
                 }else if(previous == -1){
-                    previous = val;
-                    vals.push([sanitizeInterval(divs[i*2-2].innerHTML), sanitizeFloat(divs[i*2-1].innerHTML)]);
-                    
+                    previous = range;
+                    vals.push([range, sanitizeFloat(divs[i*2-1].innerHTML)]);
+                    previous_greater = val[0];
                 }else{
-                    alert(unescape("Virhe kohdassa '"+divs[i*2-2].innerHTML+"'. Lukuv%E4lien kuuluu olla samat koko kuvaajassa"));
+                    alert(unescape("Virhe kohdassa '"+divs[i*2-2].innerHTML+"'. Lukuv%E4lien kuuluu olla samat koko kuvaajassa, ja niiden v%E4liss%E4 ei kuulu olla v%E4lej%E4."));
                 }
 
             }else{
