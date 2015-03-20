@@ -115,40 +115,44 @@ var y_move = 0;
         }
     }
 
-    // This function sanitizes an interval. It also informs the user if the float makes no sense.
+    // This function sanitizes an interval. It also informs the user if the interval makes no sense.
 
     function sanitizeInterval(interval){
 
-        // Split the interval to two floats.
+        // The interval will be split to two floats that go to different primes
 
         var a = 1;
         var b = 0;
 
+        // Don't try to split the string if it doesn't contain dashes
+
         if(interval.search("\-") != -1){
 
-        var result = interval.split("-");
+            // If the string contains dashes, split it
 
-        // Separately treat both floats
+            var result = interval.split("-");
 
-        a = sanitizeFloat(result[0]);
-        b = sanitizeFloat(result[1]);
+            // Separately treat both floats
 
-        // Did you get meaningful floats?
+            a = sanitizeFloat(result[0]);
+            b = sanitizeFloat(result[1]);
 
-        }
+            }
 
-        if(b - a > 0){
+            // Did you get meaningful floats?
 
-            // Yes, return the the size of the interval.
+            if(b - a > 0){
 
-            return [b, a];
+                // Yes, return them both.
 
-        }else{
+                return [b, a];
 
-            // No, inform the user. Unescape is used here to get finnish characters not covered by ascii.
+            }else{
 
-            alert(unescape("Virhe kohdassa '"+interval+"'. Halutaan lukuv%E4li muodossa <pienempi luku>-<suurempi luku>."));
-        }
+                // No, inform the user. Unescape is used here to get finnish characters not covered by ascii (a with umlaut).
+
+                alert(unescape("Virhe kohdassa '"+interval+"'. Halutaan lukuv%E4li muodossa <pienempi luku>-<suurempi luku>."));
+            }
     }
 
     // Main draw-code:
