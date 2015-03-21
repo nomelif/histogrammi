@@ -2,7 +2,7 @@
 
 Tämä ohjelma tuottaa annetusta datasta matemaattisilta merkinnöiltään oikeellisia histogrammeja. Ohjelma on tarkoitettu opetuskäyttöön, mutta se ei ole siihen rajoitettu. Käytetty tekniikka on HTML5 + CSS3, joten se ei vaadi riippuvuuksia, eikä se ole sidonnainen tiettyyn alustaan.
 
-Tältä voi esimerkiksi näyttää ohjelman tuottama kuvaaja (Suomessa elävän äsyntyneet välillä 2004-2013)
+Tältä voi esimerkiksi näyttää ohjelman tuottama kuvaaja (Suomessa elävänä syntyneet välillä 2004-2013)
 
 ![Syntyvyystilasto](Demo.png "Syntyvyystilasto")
 
