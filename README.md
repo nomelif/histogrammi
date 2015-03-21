@@ -2,6 +2,10 @@
 
 Tämä ohjelma tuottaa annetusta datasta matemaattisilta merkinnöiltään oikeellisia histogrammeja. Ohjelma on tarkoitettu opetuskäyttöön, mutta se ei ole siihen rajoitettu. Käytetty tekniikka on HTML5 + CSS3, joten se ei vaadi riippuvuuksia, eikä se ole sidonnainen tiettyyn alustaan.
 
+Tältä voi esimerkiksi näyttää ohjelman tuottama kuvaaja (Suomessa elävän äsyntyneet välillä 2004-2013)
+
+![Syntyvyystilasto](Demo.png "Syntyvyystilasto")
+
 ## Asennus
 
 Histogrammi-sovelluksen asennat lataamalla .zip -tiedoston [tästä](https://github.com/nomelif/histogrammi/archive/master.zip). Pura .zip -kansio ja avaa selaimella (Internet Explorer, joka on vanhempi kuin 10 ei ole tuettu, IE 10 käyttäytyy itsekin hieman oudosti.) tiedosto index.html. Ohjelma ei toimi, jos puretaan vain index.html -tiedosto, vaan se vaatii toimiakseen kaikki arkiston tedostot.
