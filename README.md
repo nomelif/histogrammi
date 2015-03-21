@@ -4,7 +4,7 @@ Tämä ohjelma tuottaa annetusta datasta matemaattisilta merkinnöiltään oikee
 
 ## Asennus
 
-Histogrammi-sovelluksen asennat lataamalla .zip -tiedoston oikeasta laidasta. Pura .zip -kansio ja avaa selaimella (Internet Explorer, joka on vanhempi kuin 10 ei ole tuettu, IE 10 käyttäytyy itsekin hieman oudosti.) tiedosto index.html. Ohjelma ei toimi, jos puretaan vain index.html -tiedosto, vaan se vaatii toimiakseen kaikki arkiston tedostot.
+Histogrammi-sovelluksen asennat lataamalla .zip -tiedoston [tästä](https://github.com/nomelif/histogrammi/archive/master.zip). Pura .zip -kansio ja avaa selaimella (Internet Explorer, joka on vanhempi kuin 10 ei ole tuettu, IE 10 käyttäytyy itsekin hieman oudosti.) tiedosto index.html. Ohjelma ei toimi, jos puretaan vain index.html -tiedosto, vaan se vaatii toimiakseen kaikki arkiston tedostot.
 
 ### Purkaminen Unixeilla ja Linux® -alustalla
 
