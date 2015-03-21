@@ -1,10 +1,10 @@
 # Histogrammi
 
-Tämä ohjelma tuottaa annetusta datasta matemaattisilta merkinnöiltään oikeellisia histogrammeja. Ohjelma on tarkoitettu opetuskäyttöön, mutta se ei ole siihen rajoitettu. Käytetty tekniikka on HTML5 + CSS3 -tekniikalla, joten se ei vaadi riippuvuuksia, eikä se ole sidonnainen tiettyyn alustaan.
+Tämä ohjelma tuottaa annetusta datasta matemaattisilta merkinnöiltään oikeellisia histogrammeja. Ohjelma on tarkoitettu opetuskäyttöön, mutta se ei ole siihen rajoitettu. Käytetty tekniikka on HTML5 + CSS3, joten se ei vaadi riippuvuuksia, eikä se ole sidonnainen tiettyyn alustaan.
 
 ## Asennus
 
-Histogrammi-sovelluksen asenna lataamalla .zip tiedoston oikeasta laidasta.Pura .zip -kansio ja avaa selaimella (Internet Explorer ei ole tuettu) tiedosto index.html.
+Histogrammi-sovelluksen asennat lataamalla .zip -tiedoston oikeasta laidasta. Pura .zip -kansio ja avaa selaimella (Internet Explorer, joka on vanhempi kuin 10 ei ole tuettu, IE 10 käyttäytyy itsekin hieman oudosti.) tiedosto index.html. Ohjelma ei toimi, jos puretaan vain index.html -tiedosto, vaan se vaatii toimiakseen kaikki arkiston tedostot.
 
 ### Purkaminen Unixeilla ja Linux® -alustalla
 
@@ -17,11 +17,11 @@ Graafinen ratkaisu vaihtelee tarkan distribuution ja työpöydän perusteella, m
 
 ### Purkaminen Microsoft Windows -alustalla
 
-Microsoft Windows-käyttöjärjestelmällä purkaminen hoituu: Resurssien hallinta > Vasen painallus > Pura Kaikki. Seuraa sitten näytöllä näkyviä ohjeita
+Microsoft Windows-käyttöjärjestelmällä purkaminen hoituu: Resurssien hallinta > Vasen painallus > Pura Kaikki. Seuraa sitten näytöllä näkyviä ohjeita.
 
 ### Purkaminen Mac OSX -alustalla
 
-Mac OSX -käyttöjärjestelmä purkaa yleensä arkistot automaattisesti. Jos tämä ei toimi, arkiston kaksoisnapauttaminen ratkaisee ongelman.
+Mac OSX -käyttöjärjestelmä purkaa yleensä arkistot automaattisesti. Jos tämä ei toimi, arkiston kaksoisnapauttaminen ratkaissee ongelman.
 
 ## Lisenssi
 
