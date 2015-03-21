@@ -31,7 +31,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // These (global) variables define translation on the x- and y-axis.
 // They are mainly used to make space for the vertical text.
 // Global variables are used here because JS doesn't support #defines
-// and macros. Wiew the as such.
+// and macros. View them as such.
 
 
 var x_move = 27;
@@ -40,7 +40,7 @@ var y_move = 0;
     
     // This function draws the co-ordinate axes
 
-    function axis(ctx){
+function axis(ctx){
 
         // Begin by saving the state of the context, as we will modify it
 
@@ -87,15 +87,15 @@ var y_move = 0;
         ctx.restore();
     }
 
-    // This function sanitizes a float entered as a string. It also informs the user.
+    // This function sanitizes a float entered as a string. It also informs the user if something goes wrong.
 
-    function sanitizeFloat(flt){
+function sanitizeFloat(flt){
 
         // Regex-based removal of most unwanted characters
 
         var result = flt.replace(/&nbsp;/g, "").replace(/\u00A0/g, "").replace(",", ".").replace(/\s/g, "").replace("<br>", "");
         
-        // If the formatted string matches this regex, it is a valid float, if it doesn't it isnt.
+        // If the formatted string matches this regex, it is a valid float, if it doesn't it isn't.
 
         var ok = /^[0-9]+([.,][0-9]+)?$/;
 
@@ -107,6 +107,7 @@ var y_move = 0;
 
             result = parseFloat(result);
             return result;
+
         }else{
 
             // It isn't valid, inform the user.
@@ -117,14 +118,14 @@ var y_move = 0;
 
     // This function sanitizes an interval. It also informs the user if the interval makes no sense.
 
-    function sanitizeInterval(interval){
+function sanitizeInterval(interval){
 
-        // The interval will be split to two floats that go to different primes
+        // The interval will be split to two floats that go into different variables
 
         var a = 1;
         var b = 0;
 
-        // Don't try to split the string if it doesn't contain dashes
+        // Don't try to split the string if it doesn't contain dashes (the interval is given as <first number>-<second number>)
 
         if(interval.search("\-") != -1){
 
@@ -137,22 +138,22 @@ var y_move = 0;
             a = sanitizeFloat(result[0]);
             b = sanitizeFloat(result[1]);
 
-            }
+        }
 
-            // Did you get meaningful floats?
+        // Did you get meaningful floats? (The lower boundary is indeed smaller than the greater one)
 
-            if(b - a > 0){
+        if(b - a > 0){
 
-                // Yes, return them both.
+            // Yes, return them both.
 
-                return [b, a];
+            return [b, a];
 
-            }else{
+        }else{
 
-                // No, inform the user. Unescape is used here to get finnish characters not covered by ascii (a with umlaut).
+            // No, inform the user. Unescape is used here to get finnish characters not covered by ascii (a with a umlautm, html entity &auml;).
 
-                alert(unescape("Virhe kohdassa '"+interval+"'. Halutaan lukuv%E4li muodossa <pienempi luku>-<suurempi luku>."));
-            }
+            alert(unescape("Virhe kohdassa '"+interval+"'. Halutaan lukuv%E4li muodossa <pienempi luku>-<suurempi luku>."));
+        }
     }
 
     // Main draw-code:
@@ -160,9 +161,9 @@ var y_move = 0;
     //    - Draws the plot
     //    - Draws texts
 
-    function plot(){
+function plot(){
 
-        // Get the canvas and other useful occult arts to start drawing.
+        // Get the canvas and all the other useful occult arts to start drawing.
 
         var canvas = document.getElementById('canvas');
         var ctx = canvas.getContext('2d');ctx.beginPath();
@@ -175,14 +176,17 @@ var y_move = 0;
 
         var inputs = document.getElementsByClassName("in");
 
-        // Regex to indicate a meaningful content of a input
+        // Regex to indicate a meaningful content of an input
 
         var clean = /^[0-9]+-[1-9]+[0-9]*$/;
 
-        // Iterate over the inputs
+        // The variable right_range holds the size of the first (and right) interval
+        // The variable previous_greater holds the upper boundary of the previous interval
 
-        var previous = -1;
+        var right_range = -1;
         var previous_greater = -1;
+
+        // Iterate over the inputs
 
         for(var i = 1; i < inputs.length/2; i++){
 
@@ -199,37 +203,48 @@ var y_move = 0;
                 var val = sanitizeInterval(inputs[i*2-2].value);
                 var range = val[0] - val[1]
 
-                if(previous_greater == -1){
-                    previous_greater == val[1] - 1;
-                }
+                // If both the range and lower boundary match
 
-                if(previous == range && previous_greater == val[1]-1){
+                if(right_range == range && previous_greater == val[1]){
 
-                vals.push([range, sanitizeFloat(inputs[i*2-1].value)]);
-                previous_greater = val[0];
-                }else if(previous == -1){
-                    previous = range;
+                    // Push the value of the input and update the lower boundary
+
                     vals.push([range, sanitizeFloat(inputs[i*2-1].value)]);
                     previous_greater = val[0];
+
+                // If this is the first one
+
+                }else if(right_range == -1){
+
+                    // Setup the lower boundary of the range, push the content of the input and setup the range
+
+                    right_range = range;
+                    vals.push([range, sanitizeFloat(inputs[i*2-1].value)]);
+                    previous_greater = val[0];
+
+                // If something goes wrong
+
                 }else{
 
-                    // IE-hack
+                    // Inform the user. Unescape is used here to get finnish characters not covered by ascii (a with a umlautm, html entity &auml;).
 
-                    if(inputs[i*2-2].value != "<br>")
                     alert(unescape("Virhe kohdassa '"+inputs[i*2-2].value+"'. Lukuv%E4lien kuuluu olla samat koko kuvaajassa, ja niiden v%E4liss%E4 ei kuulu olla v%E4lej%E4."));
+                
                 }
+
+            // If the input doesn't contain a clean interval
 
             }else{
 
-                // Else, test if the sanitization-functions already caught the problem
+                // Test if the sanitization-functions already caught the problem
 
-                if(/^$/.test(inputs[i*2-2].innerHTML)){
+                if(/^$/.test(inputs[i*2-2].innerHTML) == false){
 
-                    // if not, complain
+                    // If not, tell the user. Unescape is used here to get finnish characters not covered by ascii (a with a umlautm, html entity &auml;).
 
-                    }else{
-                        alert(unescape("Virhe kohdassa '"+inputs[i*2-2].innerHTML+"'. Halutaan lukuv%E4li muodossa <pienempi luku>-<suurempi luku>."));
-                    }
+                    alert(unescape("Virhe kohdassa '"+inputs[i*2-2].innerHTML+"'. Halutaan lukuv%E4li muodossa <pienempi luku>-<suurempi luku>."));
+                
+                }
             }
 
         }
@@ -241,12 +256,12 @@ var y_move = 0;
         var kerroin_x = 0;
         var kerroin_y = 0;
 
-        // Sum of all widths and sum of all heights, respectively
+        // Sum of all widths and height of the highest bar, respectively
 
         var sum_x = 0;
         var sum_y = 0;
 
-        // Iterate over the already-parsed left half of the spreadsheet
+        // Iterate over the parsed left half of the spreadsheet
 
         for(var i = 0; i < vals.length; i++){
            
@@ -254,7 +269,8 @@ var y_move = 0;
 
             sum_x += vals[i][0];
 
-            // Check if this is the highest bar so far
+            // Check if this is the highest value (Ie. bar) so far
+
             if(sum_y < vals[i][1]){
 
                 // If so, rember it.
@@ -264,7 +280,7 @@ var y_move = 0;
            
         }
 
-        // Calculate the exact values of the multipliers
+        // Calculate the exact values of the multipliers. These are based on the pixel-width of the <canvas> -tag.
 
         kerroin_x = 520. / sum_x;
         kerroin_y = 325. / sum_y;
@@ -273,11 +289,11 @@ var y_move = 0;
 
         var width = 0;
 
-        // List of colors to use
+        // List of colors to use. These are from Google's Material Design's palette.
 
         var colors = ["#f44336", "#e91e63", "#9c27b0", "#673ab7", "#3f51b5", "#2196f3", "#03a9f4", "#00bcd4", "#009688", "#4caf50", "#8bc34a", "#cddc39", "#ffeb3b", "#ffc107", "#ff9800", "#ff5722", "#795548"];
         
-        // Pick a first color at random
+        // Pick a first color at random, the following ones go well with it
 
         var c = Math.floor(Math.random()*colors.length);
 
@@ -289,10 +305,9 @@ var y_move = 0;
 
             width += tick(width, ctx, vals[i][1]*kerroin_y, vals[i][0]*kerroin_x, colors[c%colors.length]);
             
-            // Increment the iterator for the colors
+            // Increment the iterator for the colors. (No pun intended)
 
             c++;
-           
 
         }
 
@@ -300,7 +315,7 @@ var y_move = 0;
 
         axis(ctx);
 
-        // Prepare fonts for the text
+        // Prepare fonts and alignments for the text
 
         ctx.font = "16px Roboto";
         ctx.fillStyle = "black";
@@ -309,13 +324,17 @@ var y_move = 0;
         // Calculate the order of magnitude for the plot's x-axis
 
         var i = 1;
+
         while(Math.pow(10, i) < sum_x){
+
             i = i + 1;
+
         }
 
-        // Draw the adequate text to the adequate place
+        // Draw the adequate text to the adequate place (magic)
+
         if(!document.getElementById("show_vbars").checked)
-        ctx.fillText( String(Math.pow(10, i-1)), x_move + Math.pow(10, i-1)*kerroin_x + 30, y_move + 352);//       x_move + 370-Math.pow(10, i-1)*kerroin_x, y_move + 352);
+        ctx.fillText( String(Math.pow(10, i-1)), x_move + Math.pow(10, i-1)*kerroin_x + 30, y_move + 352);
         
         // Draw the line indicating scale of the x-axis
 
@@ -333,8 +352,11 @@ var y_move = 0;
         // Calculate the order of magnitude for the plot's y-axis
 
         i = 1;
+        
         while(Math.pow(10, i) < sum_y){
+
             i = i + 1;
+
         }
 
         // Change the alignment of the text & draw the text
@@ -352,10 +374,9 @@ var y_move = 0;
 
         ctx.stroke();
 
-        // Restore the context's status & save it again
+        // Restore the context's status
 
         ctx.restore();
-        ctx.save();
 
         // Draw the horizontal bars onto the plot
 
@@ -364,7 +385,7 @@ var y_move = 0;
 
     // Function to draw the vertical bars of the plot
 
-    function vbars(ctx, scale, i){
+function vbars(ctx, scale, i){
 
         // Save the context
 
@@ -376,21 +397,23 @@ var y_move = 0;
 
         // Set the color of the path
 
-        ctx.strokeStyle = "black";//"#626262";
+        ctx.strokeStyle = "black";
 
         // Iterate over the bars, if the scale is small use more, if it's big, use less
 
         var ii = 1;
+
         if(i < 2){
 
             // If we have a small scale, use nineteen bars
 
             while(ii < 20){
 
-                //alert(x_move + 25 + Math.pow(10, i-1)*scale*ii/2)
-
                 ctx.moveTo(x_move + Math.pow(10, i-1)*scale*ii/2 + 30,  y_move + 370);
                 ctx.lineTo(x_move +  Math.pow(10, i-1)*scale*ii/2 + 30, y_move + 360);
+
+                // Add text to only every other bar
+
                 if(!(ii%2))
                 ctx.fillText( String(Math.pow(10, i-1)*(ii/2)), x_move + Math.pow(10, i-1)*scale*ii/2 + 30, y_move + 350);//       x_move + 370-Math.pow(10, i-1)*kerroin_x, y_move + 352);
 
@@ -402,10 +425,11 @@ var y_move = 0;
 
             while(ii < 10){
 
-                ///alert(yx_move + 25 + Math.pow(10, i-1)*scale*ii);
-
                 ctx.moveTo(x_move + Math.pow(10, i-1)*scale*ii + 30,  y_move + 370);
                 ctx.lineTo(x_move + Math.pow(10, i-1)*scale*ii + 30, y_move + 360);
+
+                // Add text to only every other bar
+
                 if(!(ii%2))
                 ctx.fillText( String(Math.pow(10, i-1)*(ii)), x_move + Math.pow(10, i-1)*scale*ii + 30, y_move + 350);//       x_move + 370-Math.pow(10, i-1)*kerroin_x, y_move + 352);
 
@@ -424,7 +448,7 @@ var y_move = 0;
 
     // Function to draw the horizontal bars of the plot
 
-    function hbars(ctx, scale, i){
+function hbars(ctx, scale, i){
 
         // Save the context
 
@@ -436,11 +460,12 @@ var y_move = 0;
 
         // Set the color of the path
 
-        ctx.strokeStyle = "black";//"#626262";
+        ctx.strokeStyle = "black";
 
         // Iterate over the bars, if the scale is small use more, if it's big, use less
 
         var ii = 1;
+
         if(i < 2){
 
             // If we have a small scale, use nineteen bars
@@ -471,24 +496,26 @@ var y_move = 0;
     }
 
     // Function to draw a bar of the plot, the args mean:
-    // -before : how many pixels (of width) are used by previous bars
-    // - ctx   : context to use for drawing
-    // - height: height (in pixels) of the bar
-    // - width : width (in pixels) of the bar
-    // - color : color of the bar
+    // - before : how many pixels (of width) are used by previous bars
+    // - ctx    : context to use for drawing
+    // - height : height (in pixels) of the bar
+    // - width  : width (in pixels) of the bar
+    // - color  : color of the bar
 
-    function tick(before, ctx, height, width, color){
+function tick(before, ctx, height, width, color){
+
         ctx.fillStyle = color;
         ctx.fillRect(x_move + 30 + before, y_move + 364 - height, width, height);
         return width;
+
     }
 
     // Function used to re-draw the axes and drawing the names / units seen
     // (This internally rotates the context)
 
-    function updateAxis(){
+function updateAxis(){
 
-    // Get the divs containing the names of the units
+    // Get the inputs containing the names of the units
 
     var left = document.getElementById("vasen");
     var right = document.getElementById("oikea");
@@ -515,14 +542,15 @@ var y_move = 0;
 
     ctx.rotate( Math.PI / 2 );
  
-    // Specify the font and colour of the text
+    // Specify the font and color of the text
     ctx.font = "16px Roboto";
-    ctx.fillStyle = "black"; // red
+    ctx.fillStyle = "black";
      
-    // Set alignment of text at writing point (left-align)
+    // Set alignment of text (left-align)
     ctx.textAlign = "left";
      
     // Write the text on the right
+
     ctx.fillText( right, -y_move + 170, - x_move + 20);
      
     // Now restore the canvas flipping it back to its original orientation
@@ -541,7 +569,11 @@ var y_move = 0;
 // Function to display copyleft-info
 
 function copyleftInfo(){
+
     alert('Copyright (c) 2014 Th&eacute;o Friberg\n\n\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the\n&quot;Software&quot;), to deal in the Software without restriction, including\nwithout limitation the rights to use, copy, modify, merge, publish,\ndistribute, sublicense, and/or sell copies of the Software, and to\npermit persons to whom the Software is furnished to do so, subject to\nthe following conditions:\n\n\nThe above copyright notice and this permission notice shall be included\nin all copies or substantial portions of the Software.\n\n\nTHE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND,\nEXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF\nMERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.\nIN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY\nCLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,\nTORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE\nSOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.');
+
 }
+
+// Run the update axis-method, which runs the rest of the file
 
 updateAxis();
