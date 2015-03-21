@@ -167,36 +167,36 @@ var y_move = 0;
         var canvas = document.getElementById('canvas');
         var ctx = canvas.getContext('2d');ctx.beginPath();
 
-        // Values of the <div>s on the page, very aptly named
+        // Values of the <input type="text">s on the page, very aptly named
 
         var vals = [];
 
-        // List of the divs of the page
+        // List of the inputs of the page
 
-        var divs = document.getElementsByClassName("in");
+        var inputs = document.getElementsByClassName("in");
 
-        // Regex to indicate a meaningful content of a div
+        // Regex to indicate a meaningful content of a input
 
         var clean = /^[0-9]+-[1-9]+[0-9]*$/;
 
-        // Iterate over the divs
+        // Iterate over the inputs
 
         var previous = -1;
         var previous_greater = -1;
 
-        for(var i = 1; i < divs.length/2; i++){
+        for(var i = 1; i < inputs.length/2; i++){
 
-            // Remove <br>s from the div
+            // Remove <br>s from the input
 
-            divs[i*2-2].innerHTML = divs[i*2-2].innerHTML.replace("<br>", "");
+            inputs[i*2-2].value = inputs[i*2-2].value.replace("<br>", "");
             
-            // Make sure the div's contents make sense
+            // Make sure the input's contents make sense
 
-            if(clean.test(divs[i*2-2].innerHTML)){
+            if(clean.test(inputs[i*2-2].value)){
 
                 // If so, push it to the list
 
-                var val = sanitizeInterval(divs[i*2-2].innerHTML);
+                var val = sanitizeInterval(inputs[i*2-2].value);
                 var range = val[0] - val[1]
 
                 if(previous_greater == -1){
@@ -205,30 +205,30 @@ var y_move = 0;
 
                 if(previous == range && previous_greater == val[1]-1){
 
-                vals.push([range, sanitizeFloat(divs[i*2-1].innerHTML)]);
+                vals.push([range, sanitizeFloat(inputs[i*2-1].value)]);
                 previous_greater = val[0];
                 }else if(previous == -1){
                     previous = range;
-                    vals.push([range, sanitizeFloat(divs[i*2-1].innerHTML)]);
+                    vals.push([range, sanitizeFloat(inputs[i*2-1].value)]);
                     previous_greater = val[0];
                 }else{
 
                     // IE-hack
 
-                    if(divs[i*2-2].innerHTML != "<br>")
-                    alert(unescape("Virhe kohdassa '"+divs[i*2-2].innerHTML+"'. Lukuv%E4lien kuuluu olla samat koko kuvaajassa, ja niiden v%E4liss%E4 ei kuulu olla v%E4lej%E4."));
+                    if(inputs[i*2-2].value != "<br>")
+                    alert(unescape("Virhe kohdassa '"+inputs[i*2-2].value+"'. Lukuv%E4lien kuuluu olla samat koko kuvaajassa, ja niiden v%E4liss%E4 ei kuulu olla v%E4lej%E4."));
                 }
 
             }else{
 
                 // Else, test if the sanitization-functions already caught the problem
 
-                if(/^$/.test(divs[i*2-2].innerHTML)){
+                if(/^$/.test(inputs[i*2-2].innerHTML)){
 
                     // if not, complain
 
                     }else{
-                        alert(unescape("Virhe kohdassa '"+divs[i*2-2].innerHTML+"'. Halutaan lukuv%E4li muodossa <pienempi luku>-<suurempi luku>."));
+                        alert(unescape("Virhe kohdassa '"+inputs[i*2-2].innerHTML+"'. Halutaan lukuv%E4li muodossa <pienempi luku>-<suurempi luku>."));
                     }
             }
 
