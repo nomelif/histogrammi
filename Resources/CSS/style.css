@@ -269,7 +269,7 @@ button:active{
 }
 
 .in{
-    
+
     /*
 
     Styling for the inputs
@@ -277,8 +277,9 @@ button:active{
     */
 
     background-color: #fafafa;
+    height: 100%;
     border-width: 0px;
-    width: 9em;
+    width: 95%;
     text-align: center;
     font-family: "Roboto";
 }
@@ -290,6 +291,8 @@ select{
     Styling for the comboboxes
 
     */
-
-    width: 9em;
+   
+    width: 95%;
+    text-align: center;
+    vertical-align: middle;
 }
