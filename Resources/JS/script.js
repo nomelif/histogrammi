@@ -193,7 +193,7 @@ function plot(){
             // Remove <br>s from the input
 
             inputs[i*2-2].value = inputs[i*2-2].value.replace("<br>", "");
-            
+
             // Make sure the input's contents make sense
 
             if(clean.test(inputs[i*2-2].value)){
@@ -205,7 +205,7 @@ function plot(){
 
                 // If both the range and lower boundary match
 
-                if(right_range == range && previous_greater == val[1]){
+                if(right_range === range && previous_greater === val[1] - 1){
 
                     // Push the value of the input and update the lower boundary
 
@@ -214,7 +214,7 @@ function plot(){
 
                 // If this is the first one
 
-                }else if(right_range == -1){
+                }else if(right_range === -1){
 
                     // Setup the lower boundary of the range, push the content of the input and setup the range
 
@@ -229,7 +229,7 @@ function plot(){
                     // Inform the user. Unescape is used here to get finnish characters not covered by ascii (a with a umlautm, html entity &auml;).
 
                     alert(unescape("Virhe kohdassa '"+inputs[i*2-2].value+"'. Lukuv%E4lien kuuluu olla samat koko kuvaajassa, ja niiden v%E4liss%E4 ei kuulu olla v%E4lej%E4."));
-                
+
                 }
 
             // If the input doesn't contain a clean interval
