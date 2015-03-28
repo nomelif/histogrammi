@@ -37,7 +37,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 var x_move = 27;
 var y_move = 0;
 
-    
+
     // This function draws the co-ordinate axes
 
 function axis(ctx){
@@ -93,8 +93,8 @@ function sanitizeFloat(flt){
 
         // Regex-based removal of most unwanted characters
 
-        var result = flt.replace(/&nbsp;/g, "").replace(/\u00A0/g, "").replace(",", ".").replace(/\s/g, "").replace("<br>", "");
-        
+        var result = flt.replace(/&nbsp;/g, "").replace(/\u00A0/g, "").replace(",", ".").replace(/\s/g, "").replace("<br>", "").replace(" ", "");
+
         // If the formatted string matches this regex, it is a valid float, if it doesn't it isn't.
 
         var ok = /^[0-9]+([.,][0-9]+)?$/;
@@ -168,6 +168,10 @@ function plot(){
         var canvas = document.getElementById('canvas');
         var ctx = canvas.getContext('2d');ctx.beginPath();
 
+        // This variable is to remember what is the lowest value of the plot
+
+        var lowest_x = 0
+
         // Values of the <input type="text">s on the page, very aptly named
 
         var vals = [];
@@ -216,6 +220,10 @@ function plot(){
 
                 }else if(right_range === -1){
 
+                    // Remember what to add to all values
+
+                    lowest_x = val[1];
+
                     // Setup the lower boundary of the range, push the content of the input and setup the range
 
                     right_range = range;
@@ -243,7 +251,7 @@ function plot(){
                     // If not, tell the user. Unescape is used here to get finnish characters not covered by ascii (a with a umlautm, html entity &auml;).
 
                     alert(unescape("Virhe kohdassa '"+inputs[i*2-2].innerHTML+"'. Halutaan lukuv%E4li muodossa <pienempi luku>-<suurempi luku>."));
-                
+
                 }
             }
 
@@ -264,7 +272,7 @@ function plot(){
         // Iterate over the parsed left half of the spreadsheet
 
         for(var i = 0; i < vals.length; i++){
-           
+
             // Add the last value to the sum
 
             sum_x += vals[i][0];
@@ -277,7 +285,7 @@ function plot(){
 
                 sum_y = vals[i][1];
             }
-           
+
         }
 
         // Calculate the exact values of the multipliers. These are based on the pixel-width of the <canvas> -tag.
@@ -292,7 +300,7 @@ function plot(){
         // List of colors to use. These are from Google's Material Design's palette.
 
         var colors = ["#f44336", "#e91e63", "#9c27b0", "#673ab7", "#3f51b5", "#2196f3", "#03a9f4", "#00bcd4", "#009688", "#4caf50", "#8bc34a", "#cddc39", "#ffeb3b", "#ffc107", "#ff9800", "#ff5722", "#795548"];
-        
+
         // Pick a first color at random, the following ones go well with it
 
         var c = Math.floor(Math.random()*colors.length);
@@ -300,11 +308,11 @@ function plot(){
         // Iterate over both colors and bars
 
         for(var i = 0; i < vals.length; i++){
-        
+
             // Draw the bar
 
             width += tick(width, ctx, vals[i][1]*kerroin_y, vals[i][0]*kerroin_x, colors[c%colors.length]);
-            
+
             // Increment the iterator for the colors. (No pun intended)
 
             c++;
@@ -320,7 +328,7 @@ function plot(){
         ctx.font = "16px Roboto";
         ctx.fillStyle = "black";
         ctx.textAlign = "center";
-         
+
         // Calculate the order of magnitude for the plot's x-axis
 
         var i = 1;
@@ -334,8 +342,8 @@ function plot(){
         // Draw the adequate text to the adequate place (magic)
 
         if(!document.getElementById("show_vbars").checked)
-        ctx.fillText( String(Math.pow(10, i-1)), x_move + Math.pow(10, i-1)*kerroin_x + 30, y_move + 352);
-        
+        ctx.fillText( String(Math.pow(10, i-1)+lowest_x), x_move + Math.pow(10, i-1)*kerroin_x + 30, y_move + 352);
+
         // Draw the line indicating scale of the x-axis
 
         ctx.moveTo(x_move + Math.pow(10, i-1)*kerroin_x + 30, y_move + 355);
@@ -345,14 +353,14 @@ function plot(){
 
         if(document.getElementById("show_vbars").checked){
 
-            vbars(ctx, kerroin_x, i);
+            vbars(ctx, kerroin_x, i, lowest_x);
 
         }
 
         // Calculate the order of magnitude for the plot's y-axis
 
         i = 1;
-        
+
         while(Math.pow(10, i) < sum_y){
 
             i = i + 1;
@@ -385,7 +393,7 @@ function plot(){
 
     // Function to draw the vertical bars of the plot
 
-function vbars(ctx, scale, i){
+function vbars(ctx, scale, i, lowest_x){
 
         // Save the context
 
@@ -415,7 +423,7 @@ function vbars(ctx, scale, i){
                 // Add text to only every other bar
 
                 if(!(ii%2))
-                ctx.fillText( String(Math.pow(10, i-1)*(ii/2)), x_move + Math.pow(10, i-1)*scale*ii/2 + 30, y_move + 350);//       x_move + 370-Math.pow(10, i-1)*kerroin_x, y_move + 352);
+                ctx.fillText( String(Math.pow(10, i-1)*(ii/2) + lowest_x), x_move + Math.pow(10, i-1)*scale*ii/2 + 30, y_move + 350);//       x_move + 370-Math.pow(10, i-1)*kerroin_x, y_move + 352);
 
                 ii = ii + 1;
             }
@@ -431,7 +439,7 @@ function vbars(ctx, scale, i){
                 // Add text to only every other bar
 
                 if(!(ii%2))
-                ctx.fillText( String(Math.pow(10, i-1)*(ii)), x_move + Math.pow(10, i-1)*scale*ii + 30, y_move + 350);//       x_move + 370-Math.pow(10, i-1)*kerroin_x, y_move + 352);
+                ctx.fillText( String(Math.pow(10, i-1)*(ii) + lowest_x), x_move + Math.pow(10, i-1)*scale*ii + 30, y_move + 350);//       x_move + 370-Math.pow(10, i-1)*kerroin_x, y_move + 352);
 
                 ii = ii + 1;
             }
@@ -477,7 +485,7 @@ function hbars(ctx, scale, i){
             }
         }else{
 
-            // Else use nine bars 
+            // Else use nine bars
 
             while(ii < 10){
                 ctx.moveTo(x_move + 25,  y_move + 364-Math.pow(10, i-1)*scale*ii);
@@ -529,7 +537,7 @@ function updateAxis(){
 
     var c = document.getElementById("canvas");
     var ctx = c.getContext("2d");
-    
+
     // Clear the plot
 
     ctx.clearRect(0, 0, c.width, c.height)
@@ -537,27 +545,27 @@ function updateAxis(){
     // Start by saving the current context (current orientation, origin)
 
     ctx.save();
- 
+
     // Now rotate the canvas anti-clockwise by 90 degrees
 
     ctx.rotate( Math.PI / 2 );
- 
+
     // Specify the font and color of the text
     ctx.font = "16px Roboto";
     ctx.fillStyle = "black";
-     
+
     // Set alignment of text (left-align)
     ctx.textAlign = "left";
-     
+
     // Write the text on the right
 
     ctx.fillText( right, -y_move + 170, - x_move + 20);
-     
+
     // Now restore the canvas flipping it back to its original orientation
     ctx.restore();
     ctx.font = "16px Roboto";
     ctx.fillStyle = "black";
-     
+
     // Write the text on the left
     ctx.fillText( left, x_move + 260, y_move + 385);
 
